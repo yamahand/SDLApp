@@ -240,7 +240,7 @@ typedef enum
  */
 typedef struct SDL_CommonEvent
 {
-    Uint32 type;
+    Uint32 type;        /**< Event type, shared with all events, Uint32 to cover user events which are not in the SDL_EventType enumeration */
     Uint32 reserved;
     Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
 } SDL_CommonEvent;
@@ -560,6 +560,7 @@ typedef struct SDL_AudioDeviceEvent
 typedef struct SDL_CameraDeviceEvent
 {
     SDL_EventType type; /**< ::SDL_EVENT_CAMERA_DEVICE_ADDED, ::SDL_EVENT_CAMERA_DEVICE_REMOVED, ::SDL_EVENT_CAMERA_DEVICE_APPROVED, ::SDL_EVENT_CAMERA_DEVICE_DENIED */
+    Uint32 reserved;
     Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
     SDL_CameraDeviceID which;       /**< SDL_CameraDeviceID for the device being added or removed or changing */
     Uint8 padding1;
@@ -697,7 +698,7 @@ typedef struct SDL_QuitEvent
  */
 typedef struct SDL_UserEvent
 {
-    Uint32 type;        /**< ::SDL_EVENT_USER through ::SDL_EVENT_LAST-1 */
+    Uint32 type;        /**< ::SDL_EVENT_USER through ::SDL_EVENT_LAST-1, Uint32 because these are not in the SDL_EventType enumeration */
     Uint32 reserved;
     Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
     SDL_WindowID windowID; /**< The associated window if any */
@@ -712,7 +713,7 @@ typedef struct SDL_UserEvent
  */
 typedef union SDL_Event
 {
-    Uint32 type;                            /**< Event type, shared with all events */
+    Uint32 type;                            /**< Event type, shared with all events, Uint32 to cover user events which are not in the SDL_EventType enumeration */
     SDL_CommonEvent common;                 /**< Common event data */
     SDL_DisplayEvent display;               /**< Display event data */
     SDL_WindowEvent window;                 /**< Window event data */
