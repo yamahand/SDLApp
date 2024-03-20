@@ -1,7 +1,12 @@
+include("./tools/build/script/build_paths.lua")
+
+location(build_root)
+targetdir(build_bin)
+objdir(build_obj)
+
 workspace "SDLApp"
 configurations { "Debug", "Release" }
     platforms "x64"
-    location "build"
 
 filter { "platforms:x64" }
     system "windows"
@@ -15,28 +20,30 @@ filter { "configurations:Release" }
     defines { "NDEBUG" }
     optimize "On"
 
+include "external/imgui.lua"
+
 local EXTERNAL_DIR = "./external"
 local SDL_INC_DIR = EXTERNAL_DIR .. "/SDL/include"
 local SDL_LIB_DIR = EXTERNAL_DIR .. "/SDL/lib/%{cfg.platform}/%{cfg.buildcfg}"
+local IMGUI_DIR = EXTERNAL_DIR .. "/imgui"
 local LIB_DIR = "./lib"
 local LIB_SRC_DIR = LIB_DIR .. "/src"
-local LIB_BIN_DIR = LIB_DIR .. "/lib"
 
+group("lib")
 project "lib"
-    location "build"
-    targetdir "./lib/lib/%{cfg.platform}/%{cfg.buildcfg}"
     kind "StaticLib"
-    libdirs  { SDL_LIB_DIR }
-    includedirs { SDL_INC_DIR }
-    links { "SDL3.lib" }
+    dependson { "lib", "imgui"}
+    libdirs  { SDL_LIB_DIR, build_bin }
+    includedirs { SDL_INC_DIR, EXTERNAL_DIR, IMGUI_DIR }
+    links { "SDL3.lib", "imgui.lib" }
     files { LIB_SRC_DIR .. "/**.h", LIB_SRC_DIR .. "/**.hpp", LIB_SRC_DIR .. "/**.cpp", LIB_SRC_DIR .. "/**.cc", LIB_SRC_DIR .. "/**.inl" }
     language "C++"
     cppdialect "C++latest"
 
 
+group("app")
 project "app"
-    location "build"
-    dependson "external"
+    dependson "lib"
     targetdir "./runtime/%{cfg.buildcfg}"
     debugdir "./runtime/%{cfg.buildcfg}"
     filter "Release"
@@ -48,8 +55,8 @@ project "app"
     language "C++"
     cppdialect "C++latest"
     files { "src/**.h", "src/**.hpp", "src/**.cpp", "src/**.cc", "src/**.inl", "src/**.hlsl", "src/**.hlsli" }
-    libdirs  { LIB_BIN_DIR .. "/%{cfg.platform}/%{cfg.buildcfg}" }
-    includedirs { "./src", LIB_SRC_DIR }
+    libdirs  { build_bin }
+    includedirs { "./src", LIB_SRC_DIR, EXTERNAL_DIR }
     pchheader "stdafx.h"
     pchsource "src/stdafx.cpp"
     links { "lib" }
