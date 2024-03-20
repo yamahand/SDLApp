@@ -12,7 +12,6 @@ protected:
 	Application(const Application&) = delete;
 	Application& operator=(const Application&) = delete;
 	Application(Application&&) = delete;
-	Application() = delete;
 	Application& operator=(Application&&) = delete;
 
 	/// <summary>
