@@ -3,29 +3,27 @@
 #include "sdl/SDL.h"
 
 namespace lib {
-    extern SDL* sdl = nullptr;
-    void HelloWorld(){
-        std::cout << "Hello World!" << std::endl;
-    }
+extern SDL* sdl = nullptr;
+void HelloWorld() {
+    std::cout << "Hello World!" << std::endl;
+}
 
-    bool Initialize() {
-        sdl = new SDL();
-        sdl->Initalize();
+bool Initialize() {
+    sdl = new SDL();
+    sdl->Initalize();
 
-        return true;
-    }
+    return true;
+}
 
-    void RenderPresent()
-    {
-        sdl->RenderPresent();
-    }
+void RenderPresent() {
+    sdl->RenderPresent();
+}
 
-    void GameLoop()
-    {
-        sdl->GameLoop();
-    }
+void GameLoop() {
+    sdl->GameLoop();
+}
 
-    void Filnalize() {
-        sdl->FInalize();
-    }
+void Filnalize() {
+    sdl->FInalize();
+}
 }

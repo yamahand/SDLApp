@@ -1,8 +1,12 @@
 #pragma once
 
-#include "SDL3/SDL.h"
 
-class SDL{
+struct SDL_Window;
+struct SDL_Renderer;
+
+namespace lib {
+
+class SDL {
 public:
     SDL() = default;
     ~SDL() = default;
@@ -12,6 +16,8 @@ public:
     /// </summary>
     void Initalize();
 
+    void BeginFrame();
+    void EndFrame();
     void GameLoop();
 
     void RenderPresent();
@@ -20,8 +26,13 @@ public:
     /// SDLèIóπ
     /// </summary>
     void FInalize();
-    
+
+    bool IsEnd() const { return m_isEnd; }
+
 private:
     SDL_Window* m_window = nullptr;
     SDL_Renderer* m_renderer = nullptr;
+    bool m_isEnd = false;
 };
+
+}

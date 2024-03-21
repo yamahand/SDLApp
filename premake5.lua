@@ -34,7 +34,7 @@ project "lib"
     kind "StaticLib"
     dependson { "lib", "imgui"}
     libdirs  { SDL_LIB_DIR, build_bin }
-    includedirs { SDL_INC_DIR, EXTERNAL_DIR, IMGUI_DIR }
+    includedirs { LIB_SRC_DIR, SDL_INC_DIR, EXTERNAL_DIR, IMGUI_DIR }
     links { "SDL3.lib", "imgui.lib" }
     files { LIB_SRC_DIR .. "/**.h", LIB_SRC_DIR .. "/**.hpp", LIB_SRC_DIR .. "/**.cpp", LIB_SRC_DIR .. "/**.cc", LIB_SRC_DIR .. "/**.inl" }
     language "C++"
@@ -51,6 +51,7 @@ project "app"
     filter "Debug"
         kind "ConsoleApp"
     filter {}
+    forceincludes { "stdafx.h" }
 
     language "C++"
     cppdialect "C++latest"
