@@ -14,11 +14,11 @@ protected:
     /// <param name="argv">引数</param>
     ApplicationBase(int argc, char* argv[]);
 
-    ApplicationBase() = delete;
-    ApplicationBase(const ApplicationBase&) = delete;
+    ApplicationBase()                                  = delete;
+    ApplicationBase(const ApplicationBase&)            = delete;
     ApplicationBase& operator=(const ApplicationBase&) = delete;
-    ApplicationBase(ApplicationBase&&) = delete;
-    ApplicationBase& operator=(ApplicationBase&&) = delete;
+    ApplicationBase(ApplicationBase&&)                 = delete;
+    ApplicationBase& operator=(ApplicationBase&&)      = delete;
 
     /// <summary>
     /// デストラクタ
@@ -60,7 +60,6 @@ private:
     /// <returns></returns>
     bool Update();
 
-
     /// <summary>
     /// 終了
     /// </summary>
@@ -70,5 +69,4 @@ private:
 private:
     std::unique_ptr<SDL> m_sdl;
 };
-}
-
+}  // namespace lib

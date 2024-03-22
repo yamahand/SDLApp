@@ -45,4 +45,4 @@ void ApplicationBase::Run() {
 
     Finazlie();
 }
-}
+}  // namespace lib

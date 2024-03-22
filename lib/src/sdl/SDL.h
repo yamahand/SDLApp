@@ -1,6 +1,5 @@
 #pragma once
 
-
 struct SDL_Window;
 struct SDL_Renderer;
 
@@ -8,7 +7,7 @@ namespace lib {
 
 class SDL {
 public:
-    SDL() = default;
+    SDL()  = default;
     ~SDL() = default;
 
     /// <summary>
@@ -27,12 +26,14 @@ public:
     /// </summary>
     void FInalize();
 
-    bool IsEnd() const { return m_isEnd; }
+    bool IsEnd() const {
+        return m_isEnd;
+    }
 
 private:
-    SDL_Window* m_window = nullptr;
+    SDL_Window* m_window     = nullptr;
     SDL_Renderer* m_renderer = nullptr;
-    bool m_isEnd = false;
+    bool m_isEnd             = false;
 };
 
-}
+}  // namespace lib

@@ -13,11 +13,11 @@ public:
     /// <param name="argv">引数</param>
     Application(int argc, char* argv[]);
 
-    Application() = delete;
-    Application(const Application&) = delete;
+    Application()                              = delete;
+    Application(const Application&)            = delete;
     Application& operator=(const Application&) = delete;
-    Application(Application&&) = delete;
-    Application& operator=(Application&&) = delete;
+    Application(Application&&)                 = delete;
+    Application& operator=(Application&&)      = delete;
 
     ~Application();
 
@@ -41,4 +41,4 @@ protected:
     bool OnFinalize() final;
 };
 
-}
+}  // namespace app

@@ -1,6 +1,5 @@
 ﻿#include "Application.h"
 
-
 namespace app {
 
 Application::Application(int argc, char* argv[])
@@ -20,4 +19,4 @@ bool Application::OnFinalize() {
     return true;
 }
 
-}
+}  // namespace app

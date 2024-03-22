@@ -1,5 +1,7 @@
 #include "lib.h"
+
 #include <iostream>
+
 #include "sdl/SDL.h"
 
 namespace lib {
@@ -26,4 +28,4 @@ void GameLoop() {
 void Filnalize() {
     sdl->FInalize();
 }
-}
+}  // namespace lib

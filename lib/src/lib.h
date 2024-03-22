@@ -1,13 +1,13 @@
 #pragma once
 
 namespace lib {
-    void HelloWorld();
+void HelloWorld();
 
-    bool Initialize();
+bool Initialize();
 
-    void RenderPresent();
+void RenderPresent();
 
-    void GameLoop();
+void GameLoop();
 
-    void Filnalize();
-}
+void Filnalize();
+}  // namespace lib
