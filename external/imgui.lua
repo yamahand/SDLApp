@@ -1,3 +1,5 @@
+IMGUI_DIR = "external/imgui"
+
 group("external")
 project("imgui")
   kind("StaticLib")

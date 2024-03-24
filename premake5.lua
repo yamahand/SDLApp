@@ -21,11 +21,12 @@ filter { "configurations:Release" }
     optimize "On"
 
 include "external/imgui.lua"
+-- include "external/eigen.lua"
+include "external/DirectXMath.lua"
 
 local EXTERNAL_DIR = "./external"
 local SDL_INC_DIR = EXTERNAL_DIR .. "/SDL/include"
 local SDL_LIB_DIR = EXTERNAL_DIR .. "/SDL/lib/%{cfg.platform}/%{cfg.buildcfg}"
-local IMGUI_DIR = EXTERNAL_DIR .. "/imgui"
 local LIB_DIR = "./lib"
 local LIB_SRC_DIR = LIB_DIR .. "/src"
 
@@ -34,7 +35,7 @@ project "lib"
     kind "StaticLib"
     dependson { "lib", "imgui"}
     libdirs  { SDL_LIB_DIR, build_bin }
-    includedirs { LIB_SRC_DIR, SDL_INC_DIR, EXTERNAL_DIR, IMGUI_DIR }
+    includedirs { LIB_SRC_DIR, SDL_INC_DIR, EXTERNAL_DIR, IMGUI_DIR, DIRECTXMATH_INC_DIR }
     links { "SDL3.lib", "imgui.lib" }
     files { LIB_SRC_DIR .. "/**.h", LIB_SRC_DIR .. "/**.hpp", LIB_SRC_DIR .. "/**.cpp", LIB_SRC_DIR .. "/**.cc", LIB_SRC_DIR .. "/**.inl" }
     language "C++"
@@ -57,7 +58,7 @@ project "app"
     cppdialect "C++latest"
     files { "src/**.h", "src/**.hpp", "src/**.cpp", "src/**.cc", "src/**.inl", "src/**.hlsl", "src/**.hlsli" }
     libdirs  { build_bin }
-    includedirs { "./src", LIB_SRC_DIR, EXTERNAL_DIR }
+    includedirs { "./src", LIB_SRC_DIR, EXTERNAL_DIR, DIRECTXMATH_INC_DIR, IMGUI_DIR }
     pchheader "stdafx.h"
     pchsource "src/stdafx.cpp"
     links { "lib" }
