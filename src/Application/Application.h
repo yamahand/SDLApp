@@ -32,13 +32,13 @@ protected:
     /// 更新
     /// </summary>
     /// <returns>true:更新継続 false:終了</returns>
-    bool OnUpdate() final;
+    void OnUpdate() final;
 
     /// <summary>
     /// 終了処理
     /// </summary>
     /// <returns>true:成功 false:失敗</returns>
-    bool OnFinalize() final;
+    void OnFinalize() final;
 };
 
 }  // namespace app

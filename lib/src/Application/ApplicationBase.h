@@ -39,13 +39,13 @@ protected:
     /// 更新
     /// </summary>
     /// <returns>true:更新継続 false:終了</returns>
-    virtual bool OnUpdate() = 0;
+    virtual void OnUpdate() = 0;
 
     /// <summary>
     /// 終了処理
     /// </summary>
     /// <returns>true:成功 false:失敗</returns>
-    virtual bool OnFinalize() = 0;
+    virtual void OnFinalize() = 0;
 
 private:
     /// <summary>
@@ -58,15 +58,14 @@ private:
     /// 更新
     /// </summary>
     /// <returns></returns>
-    bool Update();
+    void Update();
 
     /// <summary>
     /// 終了
     /// </summary>
     /// <returns></returns>
-    bool Finazlie();
+    void Finazlie();
 
-private:
-    std::unique_ptr<SDL> m_sdl;
+protected:
 };
 }  // namespace lib

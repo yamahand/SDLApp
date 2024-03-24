@@ -1,6 +1,7 @@
 ﻿#include "ApplicationBase.h"
 
 #include "sdl/SDL.h"
+#include "Util/Singleton.h"
 
 namespace lib {
 
@@ -11,25 +12,21 @@ ApplicationBase::~ApplicationBase() {
 }
 
 bool ApplicationBase::Initialize() {
-    m_sdl = std::make_unique<SDL>();
-    m_sdl->Initalize();
+    Singleton<SDL>::GetInstance().Initalize();
 
     return OnInitialize();
 }
 
-bool ApplicationBase::Update() {
-    m_sdl->BeginFrame();
-    bool isContinue = OnUpdate();
-    m_sdl->EndFrame();
-    if (m_sdl->IsEnd()) {
-        isContinue = false;
+void ApplicationBase::Update() {
+    Singleton<SDL>::GetInstance().BeginFrame();
+    OnUpdate();
+    Singleton<SDL>::GetInstance().EndFrame();
+    if (Singleton<SDL>::GetInstance().IsEnd()) {
     }
-    return isContinue;
 }
 
-bool ApplicationBase::Finazlie() {
-    m_sdl->FInalize();
-    m_sdl.reset();
+void ApplicationBase::Finazlie() {
+    Singleton<SDL>::GetInstance().FInalize();
     return OnFinalize();
 }
 
@@ -40,7 +37,7 @@ void ApplicationBase::Run() {
     }
 
     while (isSuccess) {
-        isSuccess = Update();
+        Update();
     }
 
     Finazlie();
