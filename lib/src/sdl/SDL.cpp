@@ -1,6 +1,7 @@
 #include "SDL.h"
 
 #include "SDL3/SDL.h"
+#include "Util/Singleton.h"
 #include "imgui/backends/imgui_impl_sdl3.h"
 #include "imgui/backends/imgui_impl_sdlrenderer3.h"
 #include "imgui/imgui.h"
@@ -38,6 +39,22 @@ char* GetNearbyFilename(const char* file) {
 
     return SDL_strdup(file);
 }
+
+SDL_Texture* CreateTexture(SDL_Renderer* pRenderer, const uint8_t* pData, const size_t len, int32_t* pWidth, int32_t* pHeight) {
+    if (SDL_IOStream* pIOStream = SDL_IOFromConstMem(pData, len)) {
+        if (auto pSurface = SDL_LoadBMP_IO(pIOStream, SDL_TRUE)) {
+            SDL_SetSurfaceColorKey(pSurface, SDL_TRUE, SDL_MapRGB(pSurface->format, 255, 255, 255));
+
+            auto pTexture = SDL_CreateTextureFromSurface(pRenderer, pSurface);
+            *pWidth       = pSurface->w;
+            *pHeight      = pSurface->h;
+            SDL_DestroySurface(pSurface);
+            return pTexture;
+        }
+    }
+
+    return nullptr;
+}
 }  // namespace
 
 namespace lib {
@@ -49,6 +66,9 @@ void SDL::Initalize() {
     SDL_Init(SDL_INIT_VIDEO);
     m_window   = SDL_CreateWindow("Hello SDL", WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
     m_renderer = SDL_CreateRenderer(m_window, NULL, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_SetWindowSize(m_window, WIDTH, HEIGHT);
+    int32_t w, h;
+    SDL_GetWindowSize(m_window, &w, &h);
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -76,31 +96,23 @@ void SDL::BeginFrame() {
     ImGui_ImplSDL3_NewFrame();
     ImGui_ImplSDLRenderer3_NewFrame();
     ImGui::NewFrame();
+
+    /* Draw a gray background */
+    SDL_SetRenderDrawColor(m_renderer, 0xA0, 0xA0, 0xA0, 0xFF);
+    SDL_RenderClear(m_renderer);
 }
 
 void SDL::EndFrame() {
+    if (ImGui::Begin("window size")) {
+        int32_t w, h;
+        SDL_GetWindowSize(m_window, &w, &h);
+        ImGui::Text("%d, %d", w, h);
+        ImGui::End();
+    }
+
     ImGui::Render();
     ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData());
-    SDL_RenderPresent(m_renderer);
-}
-
-void SDL::GameLoop() {
-    while (true) {
-        SDL_Event event;
-        while (SDL_PollEvent(&event)) {
-            ImGui_ImplSDL3_ProcessEvent(&event);
-        }
-        ImGui_ImplSDL3_NewFrame();
-        ImGui_ImplSDLRenderer3_NewFrame();
-        ImGui::NewFrame();
-        ImGui::ShowDemoWindow();
-
-        SDL_Delay(16);
-
-        ImGui::Render();
-        ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData());
-        RenderPresent();
-    }
+    RenderPresent();
 }
 
 void SDL::RenderPresent() {
@@ -115,5 +127,9 @@ void SDL::FInalize() {
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
     SDL_Quit();
+}
+
+SDL& GetSDL() {
+    return Singleton<SDL>::GetInstance();
 }
 }  // namespace lib

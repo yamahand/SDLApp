@@ -5,6 +5,10 @@ struct SDL_Renderer;
 
 namespace lib {
 
+class SDL;
+
+SDL& GetSDL();
+
 class SDL {
 public:
     SDL()  = default;
@@ -17,7 +21,6 @@ public:
 
     void BeginFrame();
     void EndFrame();
-    void GameLoop();
 
     void RenderPresent();
 
@@ -28,6 +31,14 @@ public:
 
     bool IsEnd() const {
         return m_isEnd;
+    }
+
+    SDL_Window* GetWindow() const {
+        return m_window;
+    }
+
+    SDL_Renderer* GetRenderer() const {
+        return m_renderer;
     }
 
 private:
