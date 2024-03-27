@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 struct SDL_Window;
 struct SDL_Renderer;
@@ -15,7 +15,7 @@ public:
     ~SDL() = default;
 
     /// <summary>
-    /// SDL‰Šú‰»
+    /// SDLåˆæœŸåŒ–
     /// </summary>
     void Initalize();
 
@@ -25,7 +25,7 @@ public:
     void RenderPresent();
 
     /// <summary>
-    /// SDLI—¹
+    /// SDLçµ‚äº†
     /// </summary>
     void FInalize();
 

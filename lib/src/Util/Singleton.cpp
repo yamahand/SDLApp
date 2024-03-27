@@ -1,4 +1,4 @@
-#include "Singleton.h"
+ï»¿#include "Singleton.h"
 
 namespace lib {
 constexpr size_t kMaxFinalizersSize = 256;
@@ -10,7 +10,7 @@ void SingletonFinalizer::AddFinalizer(FinalizerFunc func) {
     if (g_finalizers_size < kMaxFinalizersSize) {
         g_finalizers[g_finalizers_size++] = func;
     } else {
-        // TODO: ƒGƒ‰[ƒƒOo‚·
+        // TODO: ã‚¨ãƒ©ãƒ¼ãƒ­ã‚°å‡ºã™
     }
 }
 
