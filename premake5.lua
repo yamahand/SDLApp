@@ -24,6 +24,7 @@ include "external/imgui.lua"
 -- include "external/eigen.lua"
 include "external/DirectXMath.lua"
 
+local RUNTIME_DIR = "./runtime"
 local EXTERNAL_DIR = "./external"
 local SDL_INC_DIR = EXTERNAL_DIR .. "/SDL/include"
 local SDL_LIB_DIR = EXTERNAL_DIR .. "/SDL/lib/%{cfg.platform}/%{cfg.buildcfg}"
@@ -76,8 +77,13 @@ project "app"
         shadertype "Vertex"
         shaderentry "BasicVS"
         shadermodel "5.0"
+    filter { "platforms:x64" }
+        prelinkcommands {
+            "rmdir %[%{!cfg.targetdir}/data]",
+            "mklink /j %[%{!cfg.targetdir}/data] %[" .. RUNTIME_DIR .. "/data]"
+        }
     filter {}
     -- copy a file from the objects directory to the target directory
     postbuildcommands {
-        "{COPYFILE} %[" .. SDL_LIB_DIR .. "/SDL3.dll] %[%{!cfg.targetdir}]"
+        "{COPYFILE} %[" .. SDL_LIB_DIR .. "/SDL3.dll] %[%{!cfg.targetdir}]",
     }
