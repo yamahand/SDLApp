@@ -33,7 +33,7 @@ void OutputFile() {
 
 void ReadFile(std::vector<char>* pBuffer) {
     // バイナリファイルを開く
-    std::ifstream file("CustomUVChecker_byValle_1K.bmp", std::ios::binary);
+    std::ifstream file("data/CustomUVChecker_byValle_1K.bmp", std::ios::binary);
     if (!file) {
         std::cerr << "ファイルを開けませんでした。" << std::endl;
         return;

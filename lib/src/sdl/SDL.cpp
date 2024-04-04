@@ -60,7 +60,7 @@ SDL_Texture* CreateTexture(SDL_Renderer* pRenderer, const uint8_t* pData, const 
 namespace lib {
 
 void SDL::Initalize() {
-    const int WIDTH  = 960;
+    const int WIDTH  = 1280;
     const int HEIGHT = 720;
 
     SDL_Init(SDL_INIT_VIDEO);
