@@ -500,7 +500,7 @@ extern DECLSPEC int SDLCALL SDL_GetCurrentRenderOutputSize(SDL_Renderer *rendere
  * \sa SDL_QueryTexture
  * \sa SDL_UpdateTexture
  */
-extern DECLSPEC SDL_Texture *SDLCALL SDL_CreateTexture(SDL_Renderer *renderer, Uint32 format, int access, int w, int h);
+extern DECLSPEC SDL_Texture *SDLCALL SDL_CreateTexture(SDL_Renderer *renderer, SDL_PixelFormatEnum format, int access, int w, int h);
 
 /**
  * Create a texture from an existing surface.
@@ -814,7 +814,7 @@ extern DECLSPEC SDL_Renderer *SDLCALL SDL_GetRendererFromTexture(SDL_Texture *te
  *
  * \since This function is available since SDL 3.0.0.
  */
-extern DECLSPEC int SDLCALL SDL_QueryTexture(SDL_Texture *texture, Uint32 *format, int *access, int *w, int *h);
+extern DECLSPEC int SDLCALL SDL_QueryTexture(SDL_Texture *texture, SDL_PixelFormatEnum *format, int *access, int *w, int *h);
 
 /**
  * Set an additional color value multiplied into render copy operations.
@@ -2019,6 +2019,10 @@ extern DECLSPEC void SDLCALL SDL_DestroyTexture(SDL_Texture *texture);
  *
  * If `renderer` is NULL, this function will return immediately after setting
  * the SDL error message to "Invalid renderer". See SDL_GetError().
+ *
+ * Note that destroying a window implicitly destroys the associated renderer,
+ * so this should not be called if the window associated with the renderer has
+ * already been destroyed.
  *
  * \param renderer the rendering context
  *
