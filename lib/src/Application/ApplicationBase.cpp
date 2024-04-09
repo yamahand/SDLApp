@@ -3,9 +3,7 @@
 #include <iostream>
 
 #include "sdl/SDL.h"
-#include "Util/Singleton.h"
-
-#include "Core/IntrusiveRefCounter.h"
+#include "Core/Singleton.h"
 #include "Core/IntrusivePtr.h"
 
 namespace lib {
@@ -31,7 +29,7 @@ ApplicationBase::~ApplicationBase() {
 bool ApplicationBase::Initialize() {
     Singleton<SDL>::GetInstance().Initalize();
 
-    auto h          = new Hoge;
+    auto h = new Hoge;
     HogePtr HogePtr(h);
 
     return OnInitialize();
