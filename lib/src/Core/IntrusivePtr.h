@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <utility>
+
 #include "Core/IntrusiveRefCounter.h"
 
 namespace lib {
@@ -61,7 +63,6 @@ private:
     T* m_ptr = nullptr;
 };
 
-
 template <class T>
 void IntrusivePtr<T>::Reset() {
     if (m_ptr) {
@@ -98,7 +99,6 @@ IntrusivePtr<T>& IntrusivePtr<T>::operator=(IntrusivePtr<T> const& r) {
     IntrusivePtr(r).swap(*this);
     return *this;
 }
-
 
 template <class T>
 IntrusivePtr<T>& IntrusivePtr<T>::operator=(T* p) {
