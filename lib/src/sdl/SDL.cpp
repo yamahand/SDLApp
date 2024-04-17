@@ -65,7 +65,7 @@ void SDL::Initalize() {
 
     SDL_Init(SDL_INIT_VIDEO);
     m_window   = SDL_CreateWindow("Hello SDL", WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
-    m_renderer = SDL_CreateRenderer(m_window, NULL, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    m_renderer = SDL_CreateRenderer(m_window, NULL, SDL_RENDERER_PRESENTVSYNC);
     SDL_SetWindowSize(m_window, WIDTH, HEIGHT);
     int32_t w, h;
     SDL_GetWindowSize(m_window, &w, &h);
