@@ -24,6 +24,7 @@
 
 #include <SDL3/SDL_platform_defines.h>
 #include <SDL3/SDL_stdinc.h>
+#include <SDL3/SDL_error.h>
 #include <SDL3/SDL_events.h>
 
 /*
@@ -365,7 +366,9 @@ extern SDLMAIN_DECLSPEC void SDLCALL SDL_AppQuit(void *appstate);
 
 
 /**
- *  The prototype for the application's main() function
+ * The prototype for the application's main() function
+ *
+ * \since This datatype is available since SDL 3.0.0.
  */
 typedef int (SDLCALL *SDL_main_func)(int argc, char *argv[]);
 extern SDLMAIN_DECLSPEC int SDLCALL SDL_main(int argc, char *argv[]);

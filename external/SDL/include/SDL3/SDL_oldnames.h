@@ -154,6 +154,7 @@
 #define SDL_WINDOWEVENT_SHOWN SDL_EVENT_WINDOW_SHOWN
 #define SDL_WINDOWEVENT_SIZE_CHANGED SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED
 #define SDL_WINDOWEVENT_TAKE_FOCUS SDL_EVENT_WINDOW_TAKE_FOCUS
+#define SDL_eventaction SDL_EventAction
 
 /* ##SDL_gamecontroller.h */
 #define SDL_CONTROLLER_AXIS_INVALID SDL_GAMEPAD_AXIS_INVALID
@@ -387,6 +388,7 @@
 /* ##SDL_pixels.h */
 #define SDL_AllocFormat SDL_CreatePixelFormat
 #define SDL_AllocPalette SDL_CreatePalette
+#define SDL_Colour SDL_Color
 #define SDL_FreeFormat SDL_DestroyPixelFormat
 #define SDL_FreePalette SDL_DestroyPalette
 #define SDL_MasksToPixelFormatEnum SDL_GetPixelFormatEnumForMasks
@@ -431,6 +433,7 @@
 #define SDL_RenderDrawRectsF SDL_RenderRects
 #define SDL_RenderFillRectF SDL_RenderFillRect
 #define SDL_RenderFillRectsF SDL_RenderFillRects
+#define SDL_RendererFlip SDL_FlipMode
 #define SDL_RenderFlush SDL_FlushRenderer
 #define SDL_RenderGetClipRect SDL_GetRenderClipRect
 #define SDL_RenderGetLogicalSize SDL_GetRenderLogicalPresentation
@@ -509,6 +512,11 @@
 #define SDL_UpperBlit SDL_BlitSurface
 #define SDL_UpperBlitScaled SDL_BlitSurfaceScaled
 
+/* ##SDL_system.h */
+#define SDL_WinRTGetFSPathUTF8 SDL_WinRTGetFSPath
+#define SDL_iPhoneSetAnimationCallback SDL_iOSSetAnimationCallback
+#define SDL_iPhoneSetEventPump SDL_iOSSetEventPump
+
 /* ##SDL_thread.h */
 #define SDL_TLSCleanup SDL_CleanupTLS
 #define SDL_TLSCreate SDL_CreateTLS
@@ -544,6 +552,7 @@
 #define SDL_AtomicLock SDL_AtomicLock_renamed_SDL_LockSpinlock
 #define SDL_AtomicTryLock SDL_AtomicTryLock_renamed_SDL_TryLockSpinlock
 #define SDL_AtomicUnlock SDL_AtomicUnlock_renamed_SDL_UnlockSpinlock
+#define SDL_atomic_t SDL_atomic_t_renamed_SDL_AtomicInt
 
 /* ##SDL_audio.h */
 #define AUDIO_F32 AUDIO_F32_renamed_SDL_AUDIO_F32LE
@@ -652,6 +661,7 @@
 #define SDL_WINDOWEVENT_SHOWN SDL_WINDOWEVENT_SHOWN_renamed_SDL_EVENT_WINDOW_SHOWN
 #define SDL_WINDOWEVENT_SIZE_CHANGED SDL_WINDOWEVENT_SIZE_CHANGED_renamed_SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED
 #define SDL_WINDOWEVENT_TAKE_FOCUS SDL_WINDOWEVENT_TAKE_FOCUS_renamed_SDL_EVENT_WINDOW_TAKE_FOCUS
+#define SDL_eventaction SDL_eventaction_renamed_SDL_EventAction
 
 /* ##SDL_gamecontroller.h */
 #define SDL_CONTROLLER_AXIS_INVALID SDL_CONTROLLER_AXIS_INVALID_renamed_SDL_GAMEPAD_AXIS_INVALID
@@ -886,6 +896,7 @@
 /* ##SDL_pixels.h */
 #define SDL_AllocFormat SDL_AllocFormat_renamed_SDL_CreatePixelFormat
 #define SDL_AllocPalette SDL_AllocPalette_renamed_SDL_CreatePalette
+#define SDL_Colour SDL_Colour_renamed_SDL_Color
 #define SDL_FreeFormat SDL_FreeFormat_renamed_SDL_DestroyPixelFormat
 #define SDL_FreePalette SDL_FreePalette_renamed_SDL_DestroyPalette
 #define SDL_MasksToPixelFormatEnum SDL_MasksToPixelFormatEnum_renamed_SDL_GetPixelFormatEnumForMasks
@@ -930,6 +941,7 @@
 #define SDL_RenderDrawRectsF SDL_RenderDrawRectsF_renamed_SDL_RenderRects
 #define SDL_RenderFillRectF SDL_RenderFillRectF_renamed_SDL_RenderFillRect
 #define SDL_RenderFillRectsF SDL_RenderFillRectsF_renamed_SDL_RenderFillRects
+#define SDL_RendererFlip SDL_RendererFlip_renamed_SDL_FlipMode
 #define SDL_RenderFlush SDL_RenderFlush_renamed_SDL_FlushRenderer
 #define SDL_RenderGetClipRect SDL_RenderGetClipRect_renamed_SDL_GetRenderClipRect
 #define SDL_RenderGetLogicalSize SDL_RenderGetLogicalSize_renamed_SDL_GetRenderLogicalPresentation
@@ -1007,6 +1019,11 @@
 #define SDL_SetColorKey SDL_SetColorKey_renamed_SDL_SetSurfaceColorKey
 #define SDL_UpperBlit SDL_UpperBlit_renamed_SDL_BlitSurface
 #define SDL_UpperBlitScaled SDL_UpperBlitScaled_renamed_SDL_BlitSurfaceScaled
+
+/* ##SDL_system.h */
+#define SDL_WinRTGetFSPathUTF8 SDL_WinRTGetFSPathUTF8_renamed_SDL_WinRTGetFSPath
+#define SDL_iPhoneSetAnimationCallback SDL_iPhoneSetAnimationCallback_renamed_SDL_iOSSetAnimationCallback
+#define SDL_iPhoneSetEventPump SDL_iPhoneSetEventPump_renamed_SDL_iOSSetEventPump
 
 /* ##SDL_thread.h */
 #define SDL_TLSCleanup SDL_TLSCleanup_renamed_SDL_CleanupTLS
