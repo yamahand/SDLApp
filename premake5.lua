@@ -34,7 +34,7 @@ local LIB_SRC_DIR = LIB_DIR .. "/src"
 group("lib")
 project "lib"
     kind "StaticLib"
-    dependson { "lib", "imgui"}
+    dependson { "imgui"}
     libdirs  { SDL_LIB_DIR, build_bin }
     includedirs { LIB_SRC_DIR, SDL_INC_DIR, EXTERNAL_DIR, IMGUI_DIR, DIRECTXMATH_INC_DIR }
     links { "SDL3.lib", "imgui.lib" }
