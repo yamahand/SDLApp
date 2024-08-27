@@ -8,10 +8,9 @@
 
 namespace {
 char* GetNearbyFilename(const char* file) {
-    char* base;
     char* path;
 
-    base = SDL_GetBasePath();
+    const auto* base = SDL_GetBasePath();
 
     if (base) {
         SDL_IOStream* rw;
@@ -20,12 +19,10 @@ char* GetNearbyFilename(const char* file) {
         path = static_cast<char*>(SDL_malloc(len));
 
         if (!path) {
-            SDL_free(base);
             return NULL;
         }
 
         (void)SDL_snprintf(path, len, "%s%s", base, file);
-        SDL_free(base);
 
         rw = SDL_IOFromFile(path, "rb");
         if (rw) {
@@ -35,6 +32,10 @@ char* GetNearbyFilename(const char* file) {
 
         /* Couldn't find the file in the base path */
         SDL_free(path);
+    } else {
+        const auto* error = SDL_GetError(); /* Clear any error from not having a base path set */
+        /* Couldn't get the base path */
+        return nullptr;
     }
 
     return SDL_strdup(file);
@@ -43,7 +44,7 @@ char* GetNearbyFilename(const char* file) {
 SDL_Texture* CreateTexture(SDL_Renderer* pRenderer, const uint8_t* pData, const size_t len, int32_t* pWidth, int32_t* pHeight) {
     if (SDL_IOStream* pIOStream = SDL_IOFromConstMem(pData, len)) {
         if (auto pSurface = SDL_LoadBMP_IO(pIOStream, SDL_TRUE)) {
-            SDL_SetSurfaceColorKey(pSurface, SDL_TRUE, SDL_MapRGB(pSurface->format, 255, 255, 255));
+            SDL_SetSurfaceColorKey(pSurface, SDL_TRUE, *((Uint8*)pSurface->pixels));
 
             auto pTexture = SDL_CreateTextureFromSurface(pRenderer, pSurface);
             *pWidth       = pSurface->w;
@@ -65,7 +66,7 @@ void SDL::Initalize() {
 
     SDL_Init(SDL_INIT_VIDEO);
     m_window   = SDL_CreateWindow("Hello SDL", WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
-    m_renderer = SDL_CreateRenderer(m_window, NULL, SDL_RENDERER_PRESENTVSYNC);
+    m_renderer = SDL_CreateRenderer(m_window, NULL);
     SDL_SetWindowSize(m_window, WIDTH, HEIGHT);
     int32_t w, h;
     SDL_GetWindowSize(m_window, &w, &h);
@@ -111,7 +112,7 @@ void SDL::EndFrame() {
     }
 
     ImGui::Render();
-    ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData());
+    ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), m_renderer);
     RenderPresent();
 }
 

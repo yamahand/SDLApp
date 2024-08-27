@@ -7,7 +7,7 @@ namespace {
 SDL_Texture* CreateTexture(SDL_Renderer* pRenderer, const uint8_t* pData, const size_t len, size_t* pWidth, size_t* pHeight) {
     if (SDL_IOStream* pIOStream = SDL_IOFromConstMem(pData, len)) {
         if (auto pSurface = SDL_LoadBMP_IO(pIOStream, SDL_TRUE)) {
-            SDL_SetSurfaceColorKey(pSurface, SDL_TRUE, SDL_MapRGB(pSurface->format, 255, 255, 255));
+            SDL_SetSurfaceColorKey(pSurface, SDL_TRUE, *((Uint8*)pSurface->pixels));
 
             auto pTexture = SDL_CreateTextureFromSurface(pRenderer, pSurface);
             *pWidth       = pSurface->w;
