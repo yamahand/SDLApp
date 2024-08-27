@@ -30,6 +30,11 @@
 *.out
 *.app
 
+# Debugs
+*.exp
+*.ilk
+*.pdb
+
 /build/
 runtime
 .vscode
