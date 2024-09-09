@@ -7,7 +7,7 @@
 #include "imgui/imgui.h"
 #include "sdl/SDL.h"
 #include "sdl/SDLSprite.h"
-#include "DirectXMath.h"
+#include "Math/Math.h"
 
 namespace app {
 
@@ -72,18 +72,23 @@ bool Application::OnInitialize() {
         return false;
     }
 
-    DirectX::XMVECTOR pos{};
-
-
     auto* sprite = new lib::SDLSprite();
     char* pData = &buffer[0];
     sprite->Intialize(reinterpret_cast<uint8_t*>(pData), buffer.size());
     pSprite = sprite;
     return true;
 }
+
+
 void Application::OnUpdate() {
     static float x = 0;
-    pSprite->SetPosition(x, x);
+
+    x += 10.0f * 0.016f;
+    if (x >= 800) {
+		x = 0;
+	}
+
+    pSprite->SetPosition(x, 0.0f);
     pSprite->Draw();
     if (ImGui::Begin("sprite pos")) {
         ImGui::End();
