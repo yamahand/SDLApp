@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+#include "Math/Math.h"
+
 namespace lib {
 class Sprite {
 public:
@@ -14,14 +16,22 @@ public:
     virtual void Draw() = 0;
 
     void Draw(float x, float y) {
-        m_x = x;
-        m_y = y;
+        m_position.m128_f32[0] = x;
+        m_position.m128_f32[1] = y;
         Draw();
     }
 
     void SetPosition(const float x, const float y) {
-        m_x = x;
-        m_y = y;
+        m_position.m128_f32[0] = x;
+        m_position.m128_f32[1] = y;
+    }
+
+    void SetPosition(const math::Vector4& position) {
+        m_position = position;
+    }
+
+    math::Vector4 GetPosition() const {
+        return m_position;
     }
 
     size_t GetWidth() const {
@@ -33,8 +43,7 @@ public:
     }
 
 protected:
-    float m_x       = 0.0f;
-    float m_y       = 0.0f;
+    math::Vector4 m_position;
     size_t m_width  = 0;
     size_t m_height = 0;
 };

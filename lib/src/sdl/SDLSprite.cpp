@@ -27,6 +27,9 @@ SDLSprite::SDLSprite() {
 }
 
 SDLSprite::~SDLSprite() {
+    if (m_pTexture) {
+        SDL_DestroyTexture(m_pTexture);
+    }
 }
 bool SDLSprite::Intialize(const uint8_t* pData, size_t size) {
     SDL_Renderer* pRenderer = GetSDL().GetRenderer();
@@ -35,8 +38,8 @@ bool SDLSprite::Intialize(const uint8_t* pData, size_t size) {
 }
 void SDLSprite::Draw() {
     SDL_FRect rect{};
-    rect.x = m_x;
-    rect.y = m_y;
+    rect.x = m_position.m128_f32[0];
+    rect.y = m_position.m128_f32[1];
     rect.w = static_cast<float>(m_width);
     rect.h = static_cast<float>(m_height);
 
