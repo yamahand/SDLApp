@@ -5,6 +5,7 @@
 #include "sdl/SDL.h"
 #include "Core/Singleton.h"
 #include "Core/IntrusivePtr.h"
+#include "Core/FileManager.h"
 
 namespace lib {
 
@@ -27,7 +28,8 @@ ApplicationBase::~ApplicationBase() {
 }
 
 bool ApplicationBase::Initialize() {
-    Singleton<SDL>::GetInstance().Initalize();
+    Singleton<SDL>::GetInstance().Initialize();
+    Singleton<FileManager>::GetInstance().Initialize();
 
     auto h = new Hoge;
     HogePtr HogePtr(h);
