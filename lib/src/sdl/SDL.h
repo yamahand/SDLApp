@@ -17,7 +17,7 @@ public:
     /// <summary>
     /// SDL初期化
     /// </summary>
-    void Initalize();
+    void Initialize();
 
     void BeginFrame();
     void EndFrame();
