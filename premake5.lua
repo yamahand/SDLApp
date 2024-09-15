@@ -20,6 +20,9 @@ filter { "configurations:Release" }
     defines { "NDEBUG" }
     optimize "On"
 
+filter "system:windows"
+    buildoptions { "/Zc:preprocessor" }
+
 include "external/imgui.lua"
 -- include "external/eigen.lua"
 include "external/DirectXMath.lua"
