@@ -6,6 +6,8 @@
 #include "Core/Singleton.h"
 #include "Core/IntrusivePtr.h"
 #include "Core/FileManager.h"
+#include "Logger/Logger.h"
+#include "Logger/LogLevel.h"
 
 namespace lib {
 
@@ -22,6 +24,7 @@ public:
 using HogePtr = IntrusivePtr<Hoge>;
 
 ApplicationBase::ApplicationBase(int argc, char* argv[]) {
+    LOG_INFO("app", "ApplicationBase");
 }
 
 ApplicationBase::~ApplicationBase() {

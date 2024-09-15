@@ -5,6 +5,7 @@
 #include <future>
 
 #include "Logger/Logger.h"
+#include "Logger/LogLevel.h"
 
 namespace lib {
 

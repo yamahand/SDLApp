@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <bitset>
+#include <future>
 
 #include "Core/IntrusivePtr.h"
 #include "Core/String.h"
