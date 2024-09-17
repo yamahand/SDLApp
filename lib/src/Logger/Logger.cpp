@@ -11,7 +11,12 @@ namespace lib::log {
 
 void Log(Level level, const char* category, const char* fileName, const char* functionName, int line, const std::string& str) {
     // ログメッセージのフォーマットと出力
-    printf("%s", str.c_str());
+    printf("%s\n", str.c_str());
+}
+
+void Log2(Level level, const char* category, const char* fileName, const char* functionName, int line, const std::string& str, const std::initializer_list<LogParameter>& params) {
+    // ログメッセージのフォーマットと出力
+    printf("%s\n", str.c_str());
 }
 
 void Logger::Initialize() {
