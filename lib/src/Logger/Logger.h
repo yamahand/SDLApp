@@ -50,16 +50,16 @@ bool operator!=(const LoggerAllocator<T>&, const LoggerAllocator<U>&) {
 using CustomString = std::basic_string<char, std::char_traits<char>, LoggerAllocator<char>>;
 }  // namespace lib::log
 
-#define __LOG(level, category, fmt, ...)                                                                                                                \
-    {                                                                                                                                                   \
-        lib::log::CustomString customString;                                                                                                            \
-        std::format_to(std::back_inserter(customString), fmt __VA_OPT__(, ) __VA_ARGS__);                                                                                                            \
+#define __LOG(level, category, fmt, ...)                                                    \
+    {                                                                                       \
+        lib::log::CustomString customString;                                                \
+        std::format_to(std::back_inserter(customString), fmt __VA_OPT__(, ) __VA_ARGS__);   \
         lib::log::Log(level, category, __FILE__, __func__, __LINE__, customString.c_str()); \
     }
-#define __LOG2(level, category, fmt, ...) \
-    {                                                                                                                              \
-        lib::log::CustomString customString;                                                                                       \
-        std::format_to(std::back_inserter(customString), fmt __VA_OPT__(, ) __VA_ARGS__);                                                                                       \
+#define __LOG2(level, category, fmt, ...)                                                                   \
+    {                                                                                                       \
+        lib::log::CustomString customString;                                                                \
+        std::format_to(std::back_inserter(customString), fmt __VA_OPT__(, ) __VA_ARGS__);                   \
         lib::log::Log2(level, category, __FILE__, __func__, __LINE__, customString.c_str(), {__VA_ARGS__}); \
     }
 
