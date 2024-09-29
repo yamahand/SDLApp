@@ -11,6 +11,8 @@
 #include "Logger/LogLevel.h"
 #include "Util/Function.h"
 #include "Util/ObservableVariable.h"
+#include "Memory/SmallBlockAllocator.h"
+#include "Memory/Memory.h"
 
 namespace lib {
 
@@ -41,6 +43,21 @@ using HogePtr = IntrusivePtr<Hoge>;
 ApplicationBase::ApplicationBase(int argc, char* argv[]) {
     LOG_INFO("app", "ApplicationBase");
     LOG_TRACE("app", "ApplicationBase {0}, {1}, {0}", __LINE__, __FILE__);
+
+    auto name = new char[10];
+
+    using SmallBlockAllocator16 = SmallBlockAllocator<16>;
+    void* mem = _aligned_malloc(SmallBlockAllocator16::NeedMemorySize, SmallBlockAllocator16::PageSize);
+    SmallBlockAllocator<64> allocator(reinterpret_cast<uintptr_t>(mem), SmallBlockAllocator16::NeedMemorySize);
+    auto* a = static_cast<int8_t*>(allocator.Allocate(sizeof(int32_t)));
+    auto* b = static_cast<int8_t*>(allocator.Allocate(sizeof(int16_t)));
+    auto* c = static_cast<int8_t*>(allocator.Allocate(sizeof(int8_t)));
+    *a      = 1;
+    *b      = 2;
+    *c      = 3;
+    allocator.Deallocate(b);
+    allocator.Deallocate(a);
+    allocator.Deallocate(c);
 
     ObservableVariable<int> var(10, [](const int& nv, const int& ov) { LOG_INFO("app", "{0} != {1}", nv, ov); });
     var.RegisterCallback([](const int& nv, const int& ov) { LOG_INFO("app", "{0} != {1}", nv, ov); });

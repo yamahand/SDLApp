@@ -13,7 +13,7 @@ filter { "platforms:x64" }
     architecture "x86_64"
 
 filter { "configurations:Debug" }
-    defines { "DEBUG", "PB_DEBUG" }
+    defines { "DEBUG", "PB_DEBUG", "PB_MEMORY_DEBUG" }
     symbols "On"
 
 filter { "configurations:Release" }
