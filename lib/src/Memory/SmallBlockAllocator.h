@@ -23,6 +23,7 @@ private:
     constexpr static size_t PageHeaderSize = sizeof(PageHeader);
 
 public:
+    SmallBlockAllocator() = default;
     SmallBlockAllocator(uintptr_t memoryAddress, size_t memorySize)
         : MemoryAllocator(memoryAddress, memorySize) {
         assert(memorySize == NeedMemorySize);
