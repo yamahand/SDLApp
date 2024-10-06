@@ -4,6 +4,8 @@
 #include "Core/File.h"
 #include "Core/FileLoader.h"
 
+#include "Core/Singleton.h"
+
 // ファイルマネージャー
 namespace lib {
 class FileManager {
@@ -19,4 +21,9 @@ public:
 
 private:
 };
+
+FileManager& GetFileManager() {
+    return Singleton<FileManager>::GetInstance();
+}
+
 }  // namespace lib
