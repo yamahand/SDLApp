@@ -22,7 +22,7 @@ public:
 private:
 };
 
-FileManager& GetFileManager() {
+static FileManager& GetFileManager() {
     return Singleton<FileManager>::GetInstance();
 }
 
