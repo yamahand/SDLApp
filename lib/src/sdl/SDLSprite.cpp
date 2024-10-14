@@ -38,8 +38,8 @@ bool SDLSprite::Intialize(const uint8_t* pData, size_t size) {
 }
 void SDLSprite::Draw() {
     SDL_FRect rect{};
-    rect.x = m_position.m128_f32[0];
-    rect.y = m_position.m128_f32[1];
+    rect.x = m_position.x;
+    rect.y = m_position.y;
     rect.w = static_cast<float>(m_width);
     rect.h = static_cast<float>(m_height);
 

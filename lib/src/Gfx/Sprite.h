@@ -16,21 +16,19 @@ public:
     virtual void Draw() = 0;
 
     void Draw(float x, float y) {
-        m_position.m128_f32[0] = x;
-        m_position.m128_f32[1] = y;
+        m_position                              = math::Vector2(x, y);
         Draw();
     }
 
     void SetPosition(const float x, const float y) {
-        m_position.m128_f32[0] = x;
-        m_position.m128_f32[1] = y;
+        m_position                              = math::Vector2(x, y);
     }
 
-    void SetPosition(const math::Vector4& position) {
+    void SetPosition(const math::Vector2& position) {
         m_position = position;
     }
 
-    math::Vector4 GetPosition() const {
+    math::Vector2 GetPosition() const {
         return m_position;
     }
 
@@ -51,9 +49,9 @@ public:
         m_height = height;
     }
 
-    void SetSize(const math::Vector4& size) {
-        m_width  = static_cast<size_t>(size.m128_f32[0]);
-        m_height = static_cast<size_t>(size.m128_f32[1]);
+    void SetSize(const math::Vector2& size) {
+        m_width  = static_cast<size_t>(size.x);
+        m_height = static_cast<size_t>(size.y);
     }
 
     void SetWidth(const size_t width) {
@@ -65,7 +63,7 @@ public:
     }
 
 protected:
-    math::Vector4 m_position;
+    math::Vector2 m_position;
     size_t m_width  = 0;
     size_t m_height = 0;
 };
