@@ -1,8 +1,7 @@
 #include "SDL.h"
 
-#include "SDL3/SDL.h"
-#include "Core/Singleton.h"
 #include "Core/Assert.h"
+#include "Core/Singleton.h"
 #include "imgui/backends/imgui_impl_sdl3.h"
 #include "imgui/backends/imgui_impl_sdlrenderer3.h"
 #include "imgui/imgui.h"
@@ -69,8 +68,7 @@ void SDL::Initialize() {
     m_window   = SDL_CreateWindow("Hello SDL", WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
     m_renderer = SDL_CreateRenderer(m_window, NULL);
     SetWindowSize(WIDTH, HEIGHT);
-    int32_t w, h;
-    SDL_GetWindowSize(m_window, &w, &h);
+    SDL_GetWindowSize(m_window, &m_windowWidth, &m_windowHeight);
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -82,15 +80,29 @@ void SDL::Initialize() {
     // Setup Platform/Renderer backends
     ImGui_ImplSDL3_InitForSDLRenderer(m_window, m_renderer);
     ImGui_ImplSDLRenderer3_Init(m_renderer);
+
+    // メインレンダーターゲットの作成
+    m_mainRenderTarget = CreateRenderTexture(m_windowWidth, m_windowHeight);
 }
 
 void SDL::BeginFrame() {
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        ImGui_ImplSDL3_ProcessEvent(&event);
+    SetRenderTarget(m_mainRenderTarget);
+    SDL_Event sdlEvent;
+    while (SDL_PollEvent(&sdlEvent)) {
+        ImGui_ImplSDL3_ProcessEvent(&sdlEvent);
 
-        switch (event.type) {
+        SDL_EventType type = static_cast<SDL_EventType>(sdlEvent.type);
+
+        switch (sdlEvent.type) {
             case SDL_EVENT_QUIT:
+                m_isEnd = true;
+                break;
+                // ウインドウのサイズ変更
+            case SDL_EVENT_WINDOW_RESIZED:
+                SDL_GetWindowSize(m_window, &m_windowWidth, &m_windowHeight);
+                break;
+                // ウインドウの閉じるボタンが押された
+            case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
                 m_isEnd = true;
                 break;
         }
@@ -106,7 +118,7 @@ void SDL::BeginFrame() {
 
 void SDL::EndFrame() {
     if (ImGui::Begin("window size")) {
-        static int32_t windowssize[2] = {0,0};
+        static int32_t windowssize[2] = {0, 0};
         ImGui::InputInt2("Window size", windowssize);
         if (ImGui::Button("SetWindowSize")) {
             SetWindowSize(windowssize[0], windowssize[1]);
@@ -116,6 +128,19 @@ void SDL::EndFrame() {
 
     ImGui::Render();
     ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), m_renderer);
+
+    // レンダーターゲットをリセット
+    SetRenderTarget(nullptr);
+    // メインレンダーターゲットを描画
+    SDL_FRect rect{};
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = static_cast<float>(m_windowWidth);
+    rect.h = static_cast<float>(m_windowHeight);
+
+    SDL_Renderer* pRenderer = GetSDL().GetRenderer();
+    SDL_RenderTexture(pRenderer, m_mainRenderTarget, nullptr, &rect);
+
     RenderPresent();
 }
 
@@ -137,6 +162,19 @@ void SDL::SetWindowSize(size_t width, size_t height) {
     // ウインドウのサイズを設定する
     auto result = SDL_SetWindowSize(m_window, static_cast<int>(width), static_cast<int>(height));
     PB_WARNING_MSG(result, "sdl", "ウインドウのサイズの設定に失敗しました.");
+    SDL_GetWindowSize(m_window, &m_windowWidth, &m_windowHeight);
+}
+
+SDL_Texture* SDL::CreateTexture(SDL_PixelFormat format, SDL_TextureAccess access, int w, int h) const {
+    return SDL_CreateTexture(m_renderer, format, access, w, h);
+}
+
+SDL_Texture* SDL::CreateRenderTexture(int w, int h, SDL_PixelFormat format) {
+    return CreateTexture(format, SDL_TEXTUREACCESS_TARGET, w, h);
+}
+
+bool SDL::SetRenderTarget(SDL_Texture* texture) {
+    return SDL_SetRenderTarget(m_renderer, texture);
 }
 
 SDL& GetSDL() {
