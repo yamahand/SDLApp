@@ -11,7 +11,7 @@ project("imgui")
   })
   includedirs({
     "imgui",
-    "SDL/include",
+    "../" .. SDL_INC_DIR,
   })
   files({
     "imgui/imconfig.h",

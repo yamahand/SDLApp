@@ -23,14 +23,13 @@ filter { "configurations:Release" }
 filter "system:windows"
     buildoptions { "/Zc:preprocessor" }
 
+include "external/SDL3.lua"
 include "external/imgui.lua"
 -- include "external/eigen.lua"
 include "external/DirectXMath.lua"
 
 local RUNTIME_DIR = "./runtime"
 local EXTERNAL_DIR = "./external"
-local SDL_INC_DIR = EXTERNAL_DIR .. "/SDL/include"
-local SDL_LIB_DIR = EXTERNAL_DIR .. "/SDL/lib/%{cfg.platform}/%{cfg.buildcfg}"
 local LIB_DIR = "./lib"
 local LIB_SRC_DIR = LIB_DIR .. "/src"
 
