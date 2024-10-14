@@ -5,9 +5,8 @@
 #include <vector>
 
 #include "imgui/imgui.h"
-#include "sdl/SDL.h"
-#include "sdl/SDLSprite.h"
 #include "Math/Math.h"
+#include "Gfx/Sprite.h"
 
 namespace app {
 
@@ -63,7 +62,7 @@ Application::Application(int argc, char* argv[])
 Application::~Application() {
 }
 
-lib::SDLSprite* pSprite = nullptr;
+lib::Sprite* pSprite = nullptr;
 
 bool Application::OnInitialize() {
     std::vector<char> buffer;
@@ -72,10 +71,8 @@ bool Application::OnInitialize() {
         return false;
     }
 
-    auto* sprite = new lib::SDLSprite();
     char* pData = &buffer[0];
-    sprite->Intialize(reinterpret_cast<uint8_t*>(pData), buffer.size());
-    pSprite = sprite;
+    pSprite = lib::Sprite::Create(reinterpret_cast<uint8_t*>(pData), buffer.size());
     return true;
 }
 

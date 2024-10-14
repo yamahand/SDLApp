@@ -10,6 +10,8 @@ public:
     Sprite()          = default;
     virtual ~Sprite() = default;
 
+    static Sprite* Create(const uint8_t* pData, size_t size);
+
 public:
     virtual bool Intialize(const uint8_t* pData, size_t size) = 0;
 
