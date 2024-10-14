@@ -61,7 +61,7 @@ project "app"
     cppdialect "C++latest"
     files { "src/**.h", "src/**.hpp", "src/**.cpp", "src/**.cc", "src/**.inl", "src/**.hlsl", "src/**.hlsli" }
     libdirs  { build_bin }
-    includedirs { "./src", LIB_SRC_DIR, EXTERNAL_DIR, DIRECTXMATH_INC_DIR, IMGUI_DIR }
+    includedirs { "./src", LIB_SRC_DIR, EXTERNAL_DIR, DIRECTXMATH_INC_DIR, IMGUI_DIR, SDL_INC_DIR }
     pchheader "stdafx.h"
     pchsource "src/stdafx.cpp"
     links { "lib" }
