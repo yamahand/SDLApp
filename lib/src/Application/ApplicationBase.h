@@ -39,7 +39,7 @@ protected:
     /// 更新
     /// </summary>
     /// <returns>true:更新継続 false:終了</returns>
-    virtual void OnUpdate() = 0;
+    virtual bool OnUpdate() = 0;
 
     /// <summary>
     /// 終了処理
@@ -58,7 +58,7 @@ private:
     /// 更新
     /// </summary>
     /// <returns></returns>
-    void Update();
+    bool Update();
 
     /// <summary>
     /// 終了

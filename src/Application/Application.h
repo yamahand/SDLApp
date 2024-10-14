@@ -32,7 +32,7 @@ protected:
     /// 更新
     /// </summary>
     /// <returns>true:更新継続 false:終了</returns>
-    void OnUpdate() final;
+    bool OnUpdate() final;
 
     /// <summary>
     /// 終了処理

@@ -82,12 +82,13 @@ bool ApplicationBase::Initialize() {
     return OnInitialize();
 }
 
-void ApplicationBase::Update() {
+bool ApplicationBase::Update() {
     Singleton<SDL>::GetInstance().BeginFrame();
-    OnUpdate();
+    bool ret = OnUpdate();
     Singleton<SDL>::GetInstance().EndFrame();
-    if (Singleton<SDL>::GetInstance().IsEnd()) {
-    }
+    ret = ret && !GetSDL().IsEnd();
+
+    return ret;
 }
 
 void ApplicationBase::Finazlie() {
@@ -102,7 +103,7 @@ void ApplicationBase::Run() {
     }
 
     while (isSuccess) {
-        Update();
+        isSuccess = Update();
     }
 
     Finazlie();

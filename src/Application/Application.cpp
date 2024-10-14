@@ -80,7 +80,7 @@ bool Application::OnInitialize() {
 }
 
 
-void Application::OnUpdate() {
+bool Application::OnUpdate() {
     static float x = 0;
 
     x += 10.0f * 0.016f;
@@ -93,6 +93,8 @@ void Application::OnUpdate() {
     if (ImGui::Begin("sprite pos")) {
         ImGui::End();
     }
+
+    return true;
 }
 void Application::OnFinalize() {
 }
