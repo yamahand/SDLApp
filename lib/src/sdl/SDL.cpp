@@ -86,7 +86,8 @@ void SDL::Initialize() {
 }
 
 void SDL::BeginFrame() {
-    SetRenderTarget(m_mainRenderTarget);
+    bool result = SetRenderTarget(m_mainRenderTarget);
+    PB_ASSERT_MSG(result, "sdl", "レンダーターゲットの設定に失敗しました.");
     SDL_Event sdlEvent;
     while (SDL_PollEvent(&sdlEvent)) {
         ImGui_ImplSDL3_ProcessEvent(&sdlEvent);
@@ -130,7 +131,8 @@ void SDL::EndFrame() {
     ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), m_renderer);
 
     // レンダーターゲットをリセット
-    SetRenderTarget(nullptr);
+    auto result = SetRenderTarget(nullptr);
+    PB_ASSERT_MSG(result, "sdl", "レンダーターゲットのリセットに失敗しました.");
     // メインレンダーターゲットを描画
     SDL_FRect rect{};
     rect.x = 0;

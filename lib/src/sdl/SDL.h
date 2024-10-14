@@ -42,7 +42,7 @@ public:
     /// アプリケーションの終了状態を確認
     /// </summary>
     /// <returns>終了状態</returns>
-    bool IsEnd() const {
+    _NODISCARD bool IsEnd() const {
         return m_isEnd;
     }
 
@@ -57,7 +57,7 @@ public:
     /// SDLウインドウの取得
     /// </summary>
     /// <returns>SDLウインドウ</returns>
-    SDL_Window* GetWindow() const {
+    _NODISCARD SDL_Window* GetWindow() const {
         return m_window;
     }
 
@@ -65,7 +65,7 @@ public:
     /// SDLレンダラーの取得
     /// </summary>
     /// <returns>SDLレンダラー</returns>
-    SDL_Renderer* GetRenderer() const {
+    _NODISCARD SDL_Renderer* GetRenderer() const {
         return m_renderer;
     }
 
@@ -77,7 +77,7 @@ public:
     /// <param name="w">幅</param>
     /// <param name="h">高さ</param>
     /// <returns>SDLテクスチャ</returns>
-    SDL_Texture* CreateTexture(SDL_PixelFormat format, SDL_TextureAccess access, int w, int h) const;
+    _NODISCARD SDL_Texture* CreateTexture(SDL_PixelFormat format, SDL_TextureAccess access, int w, int h) const;
 
     /// <summary>
     /// レンダーターゲットの作成
@@ -86,9 +86,14 @@ public:
     /// <param name="h">高さ</param>
     /// <param name="format">ピクセルフォーマット</param>
     /// <returns>レンダーテクスチャ</returns>
-    SDL_Texture* CreateRenderTexture(int w, int h, SDL_PixelFormat format = SDL_PIXELFORMAT_ARGB8888);
+    _NODISCARD SDL_Texture* CreateRenderTexture(int w, int h, SDL_PixelFormat format = SDL_PIXELFORMAT_ARGB8888);
 
-    bool SetRenderTarget(SDL_Texture* texture);
+    /// <summary>
+    /// レンダーターゲットを設定
+    /// </summary>
+    /// <param name="texture">レンダーターゲットに設定するテクスチャ</param>
+    /// <returns>設定出来たらtrue</returns>
+    _NODISCARD bool SetRenderTarget(SDL_Texture* texture);
 
 private:
     SDL_Window* m_window            = nullptr;
