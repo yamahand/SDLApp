@@ -33,6 +33,13 @@ public:
         return m_isEnd;
     }
 
+    /// <summary>
+    /// ウインドウのサイズ設定
+    /// </summary>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    void SetWindowSize(size_t width, size_t height);
+
     SDL_Window* GetWindow() const {
         return m_window;
     }

@@ -2,6 +2,7 @@
 
 #include "SDL3/SDL.h"
 #include "Core/Singleton.h"
+#include "Core/Assert.h"
 #include "imgui/backends/imgui_impl_sdl3.h"
 #include "imgui/backends/imgui_impl_sdlrenderer3.h"
 #include "imgui/imgui.h"
@@ -67,7 +68,7 @@ void SDL::Initialize() {
     SDL_Init(SDL_INIT_VIDEO);
     m_window   = SDL_CreateWindow("Hello SDL", WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE);
     m_renderer = SDL_CreateRenderer(m_window, NULL);
-    SDL_SetWindowSize(m_window, WIDTH, HEIGHT);
+    SetWindowSize(WIDTH, HEIGHT);
     int32_t w, h;
     SDL_GetWindowSize(m_window, &w, &h);
 
@@ -105,9 +106,11 @@ void SDL::BeginFrame() {
 
 void SDL::EndFrame() {
     if (ImGui::Begin("window size")) {
-        int32_t w, h;
-        SDL_GetWindowSize(m_window, &w, &h);
-        ImGui::Text("%d, %d", w, h);
+        static int32_t windowssize[2] = {0,0};
+        ImGui::InputInt2("Window size", windowssize);
+        if (ImGui::Button("SetWindowSize")) {
+            SetWindowSize(windowssize[0], windowssize[1]);
+        }
         ImGui::End();
     }
 
@@ -128,6 +131,12 @@ void SDL::FInalize() {
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
     SDL_Quit();
+}
+
+void SDL::SetWindowSize(size_t width, size_t height) {
+    // ウインドウのサイズを設定する
+    auto result = SDL_SetWindowSize(m_window, static_cast<int>(width), static_cast<int>(height));
+    PB_WARNING_MSG(result, "sdl", "ウインドウのサイズの設定に失敗しました.");
 }
 
 SDL& GetSDL() {
