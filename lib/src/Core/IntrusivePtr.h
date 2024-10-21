@@ -96,13 +96,13 @@ void IntrusivePtr<T>::Swap(IntrusivePtr& p) {
 
 template <class T>
 IntrusivePtr<T>& IntrusivePtr<T>::operator=(IntrusivePtr<T> const& r) {
-    IntrusivePtr(r).swap(*this);
+    IntrusivePtr(r).Swap(*this);
     return *this;
 }
 
 template <class T>
 IntrusivePtr<T>& IntrusivePtr<T>::operator=(T* p) {
-    IntrusivePtr(p).swap(*this);
+    IntrusivePtr(p).Swap(*this);
     return *this;
 }
 
