@@ -5,6 +5,8 @@
 namespace lib {
 
 class FileLoader;
+class File;
+using FilePtr = IntrusivePtr<File>;
 
 // ファイルを表すクラス
 class File : public IntrusiveRefCounter<File> {
