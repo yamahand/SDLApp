@@ -38,7 +38,7 @@ project "lib"
     kind "StaticLib"
     dependson { "imgui"}
     libdirs  { SDL_LIB_DIR, build_bin }
-    includedirs { LIB_SRC_DIR, SDL_INC_DIR, EXTERNAL_DIR, IMGUI_DIR, DIRECTXMATH_INC_DIR }
+    includedirs { LIB_SRC_DIR, SDL_INC_DIR, EXTERNAL_DIR, IMGUI_DIR, DIRECTXMATH_INC_DIR, STB_INC_DIR }
     links { "SDL3.lib", "imgui.lib" }
     files { LIB_SRC_DIR .. "/**.h", LIB_SRC_DIR .. "/**.hpp", LIB_SRC_DIR .. "/**.cpp", LIB_SRC_DIR .. "/**.cc", LIB_SRC_DIR .. "/**.inl" }
     language "C++"
@@ -61,7 +61,7 @@ project "app"
     cppdialect "C++latest"
     files { "src/**.h", "src/**.hpp", "src/**.cpp", "src/**.cc", "src/**.inl", "src/**.hlsl", "src/**.hlsli" }
     libdirs  { build_bin }
-    includedirs { "./src", LIB_SRC_DIR, EXTERNAL_DIR, DIRECTXMATH_INC_DIR, IMGUI_DIR }
+    includedirs { "./src", LIB_SRC_DIR, EXTERNAL_DIR, DIRECTXMATH_INC_DIR, IMGUI_DIR, STB_INC_DIR }
     pchheader "stdafx.h"
     pchsource "src/stdafx.cpp"
     links { "lib" }
