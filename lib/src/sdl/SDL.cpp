@@ -1,4 +1,4 @@
-#include "SDL.h"
+ï»¿#include "SDL.h"
 
 #include "Core/Assert.h"
 #include "Core/Singleton.h"
@@ -81,13 +81,13 @@ void SDL::Initialize() {
     ImGui_ImplSDL3_InitForSDLRenderer(m_window, m_renderer);
     ImGui_ImplSDLRenderer3_Init(m_renderer);
 
-    // ƒƒCƒ“ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Ìì¬
+    // ãƒ¡ã‚¤ãƒ³ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ä½œæˆ
     m_mainRenderTarget = CreateRenderTexture(m_windowWidth, m_windowHeight);
 }
 
 void SDL::BeginFrame() {
     bool result = SetRenderTarget(m_mainRenderTarget);
-    PB_ASSERT_MSG(result, "sdl", "ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Ìİ’è‚É¸”s‚µ‚Ü‚µ‚½.");
+    PB_ASSERT_MSG(result, "sdl", "ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®è¨­å®šã«å¤±æ•—ã—ã¾ã—ãŸ.");
     SDL_Event sdlEvent;
     while (SDL_PollEvent(&sdlEvent)) {
         ImGui_ImplSDL3_ProcessEvent(&sdlEvent);
@@ -98,11 +98,11 @@ void SDL::BeginFrame() {
             case SDL_EVENT_QUIT:
                 m_isEnd = true;
                 break;
-                // ƒEƒCƒ“ƒhƒE‚ÌƒTƒCƒY•ÏX
+                // ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚ºå¤‰æ›´
             case SDL_EVENT_WINDOW_RESIZED:
                 SDL_GetWindowSize(m_window, &m_windowWidth, &m_windowHeight);
                 break;
-                // ƒEƒCƒ“ƒhƒE‚Ì•Â‚¶‚éƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½
+                // ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸ
             case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
                 m_isEnd = true;
                 break;
@@ -118,6 +118,19 @@ void SDL::BeginFrame() {
 }
 
 void SDL::EndFrame() {
+    // ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ãƒªã‚»ãƒƒãƒˆ
+    auto result = SetRenderTarget(nullptr);
+    PB_ASSERT_MSG(result, "sdl", "ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ãƒªã‚»ãƒƒãƒˆã«å¤±æ•—ã—ã¾ã—ãŸ.");
+    // ãƒ¡ã‚¤ãƒ³ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’æç”»
+    SDL_FRect rect{};
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = static_cast<float>(m_windowWidth);
+    rect.h = static_cast<float>(m_windowHeight);
+
+    SDL_Renderer* pRenderer = GetSDL().GetRenderer();
+    SDL_RenderTexture(pRenderer, m_mainRenderTarget, nullptr, &rect);
+    
     if (ImGui::Begin("window size")) {
         static int32_t windowssize[2] = {0, 0};
         ImGui::InputInt2("Window size", windowssize);
@@ -129,19 +142,6 @@ void SDL::EndFrame() {
 
     ImGui::Render();
     ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), m_renderer);
-
-    // ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒŠƒZƒbƒg
-    auto result = SetRenderTarget(nullptr);
-    PB_ASSERT_MSG(result, "sdl", "ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ÌƒŠƒZƒbƒg‚É¸”s‚µ‚Ü‚µ‚½.");
-    // ƒƒCƒ“ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğ•`‰æ
-    SDL_FRect rect{};
-    rect.x = 0;
-    rect.y = 0;
-    rect.w = static_cast<float>(m_windowWidth);
-    rect.h = static_cast<float>(m_windowHeight);
-
-    SDL_Renderer* pRenderer = GetSDL().GetRenderer();
-    SDL_RenderTexture(pRenderer, m_mainRenderTarget, nullptr, &rect);
 
     RenderPresent();
 }
@@ -161,9 +161,9 @@ void SDL::FInalize() {
 }
 
 void SDL::SetWindowSize(size_t width, size_t height) {
-    // ƒEƒCƒ“ƒhƒE‚ÌƒTƒCƒY‚ğİ’è‚·‚é
+    // ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚ºã‚’è¨­å®šã™ã‚‹
     auto result = SDL_SetWindowSize(m_window, static_cast<int>(width), static_cast<int>(height));
-    PB_WARNING_MSG(result, "sdl", "ƒEƒCƒ“ƒhƒE‚ÌƒTƒCƒY‚Ìİ’è‚É¸”s‚µ‚Ü‚µ‚½.");
+    PB_WARNING_MSG(result, "sdl", "ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚ºã®è¨­å®šã«å¤±æ•—ã—ã¾ã—ãŸ.");
     SDL_GetWindowSize(m_window, &m_windowWidth, &m_windowHeight);
 }
 
