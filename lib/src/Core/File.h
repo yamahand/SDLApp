@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Core/IntrusiveRefCounter.h"
+#include "Core/IntrusivePtr.h"
 
 namespace lib {
 
