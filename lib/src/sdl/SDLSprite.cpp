@@ -19,7 +19,7 @@ SDL_Texture* CreateTexture(SDL_Renderer* pRenderer, const uint8_t* pData, const 
 
     return nullptr;
 }
-}
+}  // namespace
 
 namespace lib {
 
@@ -27,15 +27,22 @@ SDLSprite::SDLSprite() {
 }
 
 SDLSprite::~SDLSprite() {
-    if (m_pTexture) {
-        SDL_DestroyTexture(m_pTexture);
-    }
+    Finalize();
 }
+
 bool SDLSprite::Intialize(const uint8_t* pData, size_t size) {
     SDL_Renderer* pRenderer = GetSDL().GetRenderer();
-    m_pTexture           = CreateTexture(pRenderer, pData, size, &m_width, &m_height);
+    m_pTexture              = CreateTexture(pRenderer, pData, size, &m_width, &m_height);
     return m_pTexture == nullptr;
 }
+
+void SDLSprite::Finalize() {
+    if (m_pTexture) {
+        SDL_DestroyTexture(m_pTexture);
+        m_pTexture = nullptr;
+    }
+}
+
 void SDLSprite::Draw() {
     SDL_FRect rect{};
     rect.x = m_position.x;

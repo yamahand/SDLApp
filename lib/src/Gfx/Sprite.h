@@ -13,17 +13,31 @@ public:
     static Sprite* Create(const uint8_t* pData, size_t size);
 
 public:
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    /// <param name="pData"></param>
+    /// <param name="size"></param>
+    /// <returns></returns>
     virtual bool Intialize(const uint8_t* pData, size_t size) = 0;
 
+    /// <summary>
+    /// 終了処理
+    /// </summary>
+    virtual void Finalize() = 0;
+
+    /// <summary>
+    /// 描画
+    /// </summary>
     virtual void Draw() = 0;
 
     void Draw(float x, float y) {
-        m_position                              = math::Vector2(x, y);
+        m_position = math::Vector2(x, y);
         Draw();
     }
 
     void SetPosition(const float x, const float y) {
-        m_position                              = math::Vector2(x, y);
+        m_position = math::Vector2(x, y);
     }
 
     void SetPosition(const math::Vector2& position) {
