@@ -4,8 +4,17 @@
 
 #include "stb/stb_truetype.h"
 #include "Core/File.h"
+#include "Core/Singleton.h"
+
 
 namespace lib {
+
+class FontManager;
+
+FontManager& GetFontManager() {
+    return Singleton<FontManager>::GetInstance();
+}
+
 class FontManager {
 public:
     FontManager();

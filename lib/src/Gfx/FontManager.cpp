@@ -35,14 +35,14 @@ void FontManager::LoadFont(const char* fontName, const char* fontPath, int fontS
 }
 
 void FontManager::LoadFont(const char* fontName, const FilePtr& fontFile, int fontSize) {
-	// Load font
+    // Load font
     stbtt_fontinfo fontInfo;
-    stbtt_InitFont(&fontInfo, fontFile->GetData<unsigned char*>(), 0);
+    stbtt_InitFont(&fontInfo, fontFile->GetData<unsigned char>(), 0);
     // Create font
-	Font font;
-	font.name     = fontName;
-	font.size     = fontSize;
-	font.fontInfo = fontInfo;
-	fontDataList.push_back(font);
-
-}  // namespace lib
+    Font font;
+    font.name     = fontName;
+    font.size     = fontSize;
+    font.fontInfo = fontInfo;
+    fontDataList.push_back(font);
+}
+}   // namespace lib
